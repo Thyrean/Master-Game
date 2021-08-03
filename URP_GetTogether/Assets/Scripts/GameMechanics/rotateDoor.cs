@@ -11,9 +11,12 @@ public class rotateDoor : MonoBehaviour
     private Animator animator;
 
     public bool canAnimate;
+    public bool charIsClose;
 
     void Start()
     {
+        charIsClose = false;
+
         animator = gameObject.GetComponent<Animator>();
 
         ReactionManager.Add("rotateDoor", RotateDoor);
@@ -26,7 +29,27 @@ public class rotateDoor : MonoBehaviour
             && doorParts[1].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("180")
             && doorParts[2].GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("270"))
         {
-            ReactionManager.Call("openCircleDoor");
+            ReactionManager.Call("enableDoorButton");
+        }
+
+        /*if (Input.GetKeyDown(KeyCode.Alpha4) && charIsClose == true)
+        {
+            ReactionManager.Call("rotateDoor");
+        }*/
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Character")
+        {
+            charIsClose = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Character")
+        {
+            charIsClose = false;
         }
     }
 
@@ -51,6 +74,18 @@ public class rotateDoor : MonoBehaviour
     private void OpenCircleDoor(string[] empty)
     {
         animator.Play("openCircleDoor");
+
+        StartCoroutine(DestroyDoor(doorParts[0]));
+        StartCoroutine(DestroyDoor(doorParts[1]));
+        StartCoroutine(DestroyDoor(doorParts[2]));
+        StartCoroutine(DestroyDoor(doorParts[3]));
+    }
+
+    IEnumerator DestroyDoor(GameObject go)
+    {
+        yield return new WaitForSeconds(2);
+
+        go.SetActive(false);
     }
 }
 

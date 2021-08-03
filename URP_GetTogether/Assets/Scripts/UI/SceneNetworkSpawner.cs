@@ -7,7 +7,7 @@ using UnityEngine;
 public class SceneNetworkSpawner : MonoBehaviour 
 {
     public NetworkIdentity[] spawnPrefab;
-    System.Guid[] savedIDs;
+    //System.Guid[] savedIDs;
 
     //public Guid spawnId;
     /*void Update()
@@ -44,7 +44,9 @@ public class SceneNetworkSpawner : MonoBehaviour
             Debug.Log("Server Reaction");
             for (var i = 0; i < spawnPrefab.Length; i++)
             {
-                NetworkServer.Spawn(spawnPrefab[i].gameObject);
+                spawnPrefab[i].assetId = System.Guid.NewGuid();
+
+                NetworkServer.Spawn(spawnPrefab[i].gameObject, spawnPrefab[i].assetId);
 
                 //GameObject spawnThis = (GameObject)Instantiate(spawnPrefabs[i].gameObject, transform.position, transform.rotation);
                 //savedIDs[i] = spawnPrefab[i].assetId;
@@ -53,34 +55,26 @@ public class SceneNetworkSpawner : MonoBehaviour
 
         if(!NetworkServer.active)
         {
+            ClientScene.PrepareToSpawnSceneObjects();
+
             Debug.Log("Client Reaction");
             for (var i = 0; i < spawnPrefab.Length; i++)
             {
                 Debug.Log("Client Looping");
-                ClientScene.PrepareToSpawnSceneObjects();
 
-                //savedIDs[i] = spawnPrefab[i].assetId;
+                //spawnPrefab[i].assetId = System.Guid.NewGuid();
 
                 //ClientScene.RegisterPrefab(spawnPrefab[i].gameObject, savedIDs[i]);
                 
                 //GameObject.Instantiate(spawnPrefab[i].gameObject, spawnPrefab[i].gameObject.transform.position, Quaternion.identity);
-                ClientScene.RegisterSpawnHandler(spawnPrefab[i], Spawn, Unspawn);
+                ClientScene.RegisterSpawnHandler(spawnPrefab[i].assetId, Spawn, Unspawn);
             }
         }    
     }
 
-    public GameObject Spawn(Vector3 position, Guid assetId)
+    public GameObject Spawn(SpawnMessage msg)
     {
-        if (spawnPrefab != null)
-        {
-            Debug.Log("Spawning Prefabs on Client");
-            foreach (NetworkIdentity spawnThis in spawnPrefab)
-            {
-                return GameObject.Instantiate(spawnThis.gameObject, spawnThis.gameObject.transform.position, Quaternion.identity);
-            }
-        }
-        
-        return null;
+        return GameObject.Instantiate(spawnPrefab[0].gameObject, msg.position, msg.rotation);
     }
 
     private void Unspawn(GameObject go)

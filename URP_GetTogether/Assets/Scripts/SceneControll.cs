@@ -32,6 +32,7 @@ public class SceneControll : MonoBehaviour
             var loadMessage = new LoadSceneMessage();
             loadMessage.sceneIndex = isPlayerA ? aSceneIndex : bSceneIndex;
             connection.Value.Send(loadMessage);
+            
         }
     }
 }

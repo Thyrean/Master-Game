@@ -1,49 +1,93 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.ActionReactionSystem;
+
 using UnityEngine;
 using Mirror;
+using System;
 
 public class PickUpObject : NetworkBehaviour
 {
     public Animator anim;
     public GameObject myHands;
-    bool canpickup;
+
+    [SyncVar]
+    public bool atBatteryPad0;
+    [SyncVar]
+    public bool atBatteryPad1;
+    [SyncVar]
+    public bool atBatteryPad2;
+    [SyncVar]
+    public bool atBatteryPad3;
+
+    [SyncVar]
+    public int atPad;
+
+    public GameObject[] batteryPads;
+
+    public bool canpickup;
     GameObject ObjectIwantToPickUp;
-    bool hasItem;
+    public bool hasItem;
 
     public GameObject batteryUI;
+
+    public Material fullMaterial;
+    public Material halfMaterial;
+    public Material emptyMaterial;
 
     [SyncVar(hook = "UpdateBattery")]
     public int batteryCharge;
 
     void Start()
     {
+        atPad = 0;
         canpickup = false;
         hasItem = false;
         batteryCharge = 100;
+
+        batteryUI.GetComponent<Renderer>().material = fullMaterial;
     }
+
 
     void LateUpdate()
     {
-        if (canpickup == true) 
+        if(batteryPads[0] == null)
         { 
-            if (Input.GetKeyDown(KeyCode.E) && hasItem == false)  
+            batteryPads[0] = GameObject.FindGameObjectWithTag("batteryPad0");
+            batteryPads[1] = GameObject.FindGameObjectWithTag("batteryPad1");
+            batteryPads[2] = GameObject.FindGameObjectWithTag("batteryPad2");
+            batteryPads[3] = GameObject.FindGameObjectWithTag("batteryPad3");
+
+            batteryPads[1].tag = "Untagged";
+            batteryPads[2].tag = "Untagged";
+            batteryPads[3].tag = "Untagged";
+        }
+
+        if (canpickup == true)
+        {
+            if (Input.GetKeyDown(KeyCode.E) && hasItem == false)
             {
-                
+
                 if (isClient)
                     ClientPickUpItem(ObjectIwantToPickUp.GetComponent<NetworkIdentity>().netId);
                 //if (isServer)
-                    //ServerPickUpItem(ObjectIwantToPickUp.GetComponent<NetworkIdentity>().netId);
+                //ServerPickUpItem(ObjectIwantToPickUp.GetComponent<NetworkIdentity>().netId);
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && hasItem == true) 
+        if (Input.GetKeyDown(KeyCode.Q) && hasItem == true)
         {
             if (isClient)
                 ClientDropItem(ObjectIwantToPickUp.GetComponent<NetworkIdentity>().netId);
         }
 
-        
+        if (Input.GetKeyDown(KeyCode.E) && hasItem == true && (atBatteryPad0 == true || atBatteryPad1 == true || atBatteryPad2 == true || atBatteryPad3 == true))
+        {
+            if (isClient)
+                ClientPlaceBattery(ObjectIwantToPickUp.GetComponent<NetworkIdentity>().netId);
+        }
+
+
         /*if(isServer && hasItem == true)
         {
             UpdateItemPosition(ObjectIwantToPickUp, myHands);
@@ -57,38 +101,76 @@ public class PickUpObject : NetworkBehaviour
 
         batteryCharge = newValue;
 
-        if(newValue == 50)
+        if (newValue == 50)
         {
-            batteryUI.transform.localScale = new Vector3(1f, 0.5f, 1f);
+            batteryUI.GetComponent<Renderer>().material = halfMaterial;
 
             Debug.Log("Battery is 50% charged");
         }
         else if (newValue == 0)
         {
-            batteryUI.transform.localScale = new Vector3(1f, 0f, 1f);
+            batteryUI.GetComponent<Renderer>().material = emptyMaterial;
 
             Debug.Log("Battery is 0% charged");
         }
     }
 
-    private void OnTriggerEnter(Collider other) 
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Battery") 
+        if (other.gameObject.tag == "Battery")
         {
-            canpickup = true;  
+            canpickup = true;
             ObjectIwantToPickUp = other.gameObject;
+        }
+
+        if (other.gameObject.tag == "batteryPad0")
+        {
+            atBatteryPad0 = true;
+            ClientSendNumber(0);
+        }
+        if (other.gameObject.tag == "batteryPad1")
+        {
+            atBatteryPad1 = true;
+            ClientSendNumber(1);
+        }
+        if (other.gameObject.tag == "batteryPad2")
+        {
+            atBatteryPad2 = true;
+            ClientSendNumber(2);
+        }
+        if (other.gameObject.tag == "batteryPad3")
+        {
+            atBatteryPad3 = true;
+            ClientSendNumber(3);
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        canpickup = false; 
-
+        if (other.gameObject.tag == "Battery")
+        {
+            canpickup = false;
+        }
+        if (other.gameObject.tag == "batteryPad0")
+        {
+            atBatteryPad0 = false;
+            ClientSendNumber(0);
+        }
+        if (other.gameObject.tag == "batteryPad1")
+        {
+            atBatteryPad1 = false;
+            ClientSendNumber(0);
+        }
+        if (other.gameObject.tag == "batteryPad2")
+        {
+            atBatteryPad2 = false;
+            ClientSendNumber(0);
+        }
+        if (other.gameObject.tag == "batteryPad3")
+        {
+            atBatteryPad3 = false;
+            ClientSendNumber(0);
+        }
     }
-
-    /*private void UpdateItemPosition(GameObject _Object, GameObject _copyObject)
-    {
-        _Object.transform.position = _copyObject.transform.position;
-    }*/
 
     [Command]
     public void ClientPickUpItem(uint itemID)
@@ -101,7 +183,8 @@ public class PickUpObject : NetworkBehaviour
             cc.enabled = false;
 
             pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
-            pickUpObj.transform.position = myHands.transform.position - new Vector3(.5f, .15f, .5f);
+            //pickUpObj.tag = "disabled";
+            pickUpObj.transform.position = myHands.transform.position;
             pickUpObj.transform.parent = myHands.transform;
 
             //ObjectIwantToPickUp.GetComponent<NetworkTransform>().enabled = false;
@@ -110,7 +193,7 @@ public class PickUpObject : NetworkBehaviour
 
             UpdateBattery(batteryCharge, batteryCharge - 50);
 
-            //anim.Play("CarryIdle");
+            anim.Play("CarryIdle");
             hasItem = true;
 
             ServerPickUpItem(itemID);
@@ -132,10 +215,14 @@ public class PickUpObject : NetworkBehaviour
             //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = true;
 
             pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
-            pickUpObj.transform.position = myHands.transform.position - new Vector3(.5f,.15f,.5f);
+            //pickUpObj.tag = "disabled";
+            pickUpObj.transform.position = myHands.transform.position;
             pickUpObj.transform.parent = myHands.transform;
 
-            //anim.Play("CarryIdle");
+            //UpdateBattery(batteryCharge, batteryCharge - 50);
+
+
+            anim.Play("CarryIdle");
             hasItem = true;
         }
         else return;
@@ -158,10 +245,11 @@ public class PickUpObject : NetworkBehaviour
         //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = false;
 
         pickUpObj.GetComponent<Rigidbody>().isKinematic = false;
+        //pickUpObj.tag = "Battery";
         pickUpObj.transform.parent = null;
 
-        //anim.Play("StableGrounded");
-        hasItem = false; 
+        anim.Play("StableGrounded");
+        hasItem = false;
 
         ServerDropItem(itemID);
     }
@@ -183,9 +271,101 @@ public class PickUpObject : NetworkBehaviour
         //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = false;
 
         pickUpObj.GetComponent<Rigidbody>().isKinematic = false;
+        //pickUpObj.tag = "Battery";
         pickUpObj.transform.parent = null;
 
-        // anim.Play("StableGrounded");
+        anim.Play("StableGrounded");
         hasItem = false;
+        canpickup = false;
+
     }
+
+    [Command]
+    public void ClientPlaceBattery(uint itemID)
+    {
+        GameObject pickUpObj = NetworkIdentity.spawned[itemID].gameObject;
+
+        CapsuleCollider cc = pickUpObj.GetComponent<CapsuleCollider>();
+        cc.enabled = true;
+
+        pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
+        pickUpObj.transform.position = batteryPads[atPad].transform.position + new Vector3(0, 1f, 0);
+        pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+        pickUpObj.transform.parent = null;
+        //pickUpObj.tag = "disabled";
+
+        anim.Play("StableGrounded");
+        hasItem = false;
+        canpickup = false;
+
+        batteryPads[atPad].GetComponent<EnergyPad>().batteryPlaced = true;
+        //batteryPads[atPad].GetComponent<EnergyPad>().ObjectUI.SetActive(false);
+        //batteryPads[atPad].tag = "disabled";
+
+        ServerPlaceBattery(itemID);
+    }
+
+    [ClientRpc]
+    private void ServerPlaceBattery(uint itemID)
+    {
+        GameObject pickUpObj = NetworkIdentity.spawned[itemID].gameObject;
+
+        CapsuleCollider cc = pickUpObj.GetComponent<CapsuleCollider>();
+        cc.enabled = true;
+
+        pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
+        pickUpObj.transform.position = batteryPads[atPad].transform.position + new Vector3(0, 1f, 0);
+        pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+        pickUpObj.transform.parent = null;
+        //pickUpObj.tag = "disabled";
+
+        //batteryPad.GetComponent<EnergyPad>().batteryPlaced = true;
+        //batteryPad.GetComponent<EnergyPad>().ObjectUI.SetActive(false);
+
+        anim.Play("StableGrounded");
+        hasItem = false;
+        canpickup = false;
+
+        batteryPads[atPad].GetComponent<EnergyPad>().batteryPlaced = true;
+        //batteryPads[atPad].GetComponent<EnergyPad>().ObjectUI.SetActive(false);
+        //batteryPads[atPad].tag = "disabled";
+    }
+
+    [Command]
+    private void ClientSendNumber(int Number)
+    {
+        ServerShareNumber(Number);
+    }
+    [ClientRpc]
+    private void ServerShareNumber(int shareNumber)
+    {
+        atPad = shareNumber;
+    }
+
+    /*[Command]
+    private void ClientSendGO(GameObject syncGO)
+    {
+        if(syncGO == null)
+        {
+            Debug.Log("NO GO FOUND");
+        }
+        
+        SendGOtoClients(syncGO);
+    }
+
+    [ClientRpc]
+    private void SendGOtoClients(GameObject serverGO)
+    {
+        Debug.Log("Sending GO to all other Clients");
+
+        batteryPad = serverGO;
+    }*/
+
+    /*private void ShareBatteryPad(string[] empty)
+    {
+        if(batteryPad != null)
+        {
+            batteryPad = batteryPad;
+        }
+    }*/
 }

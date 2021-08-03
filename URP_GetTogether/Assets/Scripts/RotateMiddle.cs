@@ -9,16 +9,37 @@ public class RotateMiddle : MonoBehaviour
     private Animator animator;
     public bool canAnimate;
 
+    public bool charIsClose;
+
     void Start()
     {
+        charIsClose = false;
+
         ReactionManager.Add("rotateMiddle", rotateMiddle);
     }
 
-    private void OnMouseDown()
+    private void Update()
     {
-        ReactionManager.Call("rotateMiddle");
-        //yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length + animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        if (Input.GetKeyDown(KeyCode.Alpha2) && charIsClose == true)
+        {
+            ReactionManager.Call("rotateMiddle");
+        }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Character")
+        {
+            charIsClose = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Character")
+        {
+            charIsClose = false;
+        }
+    }
+
 
     private void rotateMiddle(string[] empty)
     {

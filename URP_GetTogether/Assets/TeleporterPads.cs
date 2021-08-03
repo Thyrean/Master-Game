@@ -4,68 +4,35 @@ using Assets.Scripts.ActionReactionSystem;
 using UnityEngine;
 using Mirror;
 
-public class TeleporterPads : MonoBehaviour
+public class TeleporterPads : NetworkBehaviour 
 {
-    //public GameObject lowerPad;
-    //public GameObject upperPad;
-
-    public GameObject upperPlayer;
-    public GameObject lowerPlayer;
 
     public bool lowerPadActive;
     public bool upperPadActive;
 
-    public bool bothActive;
+    [SyncVar]
+    public bool justTeleported;
 
- 
     void Start()
     {
+        justTeleported = false;
+
         ReactionManager.Add("activateUpperPad", ActivateUpperPad);
         ReactionManager.Add("activateLowerPad", ActivateLowerPad);
         ReactionManager.Add("deactivateUpperPad", DeactivateUpperPad);
         ReactionManager.Add("deactivateLowerPad", DeactivateLowerPad);
-
-        ReactionManager.Add("Teleport", TeleportPlayers);
     }
 
     private void Update()
     {
-        if(lowerPadActive == true && upperPadActive == true)
+        if (justTeleported == false)
         {
-            bothActive = true;
-        
-        }
-
-        if(Input.GetKeyDown(KeyCode.T) && bothActive == true)
-        {
-            ReactionManager.Call("Teleport");
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (gameObject.tag == "upperPad")
-        {
-            ReactionManager.Call("activateUpperPad");
-            upperPlayer = other.gameObject;
-        }
-        if (gameObject.tag == "lowerPad")
-        {
-            ReactionManager.Call("activateLowerPad");
-            lowerPlayer = other.gameObject;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (gameObject.tag == "upperPad")
-        {
-            ReactionManager.Call("deactivateUpperPad");
-            upperPlayer = null;
-        }
-        if (gameObject.tag == "lowerPad")
-        { 
-            ReactionManager.Call("deactivateLowerPad");
-            lowerPlayer = null;
+            if (lowerPadActive == true && upperPadActive == true)
+            {
+                //Debug.Log("Both active");
+                ReactionManager.Call("TeleportPlayers");
+                justTeleported = true;
+            }
         }
     }
 
@@ -87,14 +54,5 @@ public class TeleporterPads : MonoBehaviour
     private void DeactivateLowerPad(string[] empty)
     {
         lowerPadActive = false;
-    }
-
-    private void TeleportPlayers(string[] empty)
-    {
-        Debug.Log("Teleport called!");
-
-        upperPlayer.transform.position = new Vector3(0, 0, 0);
-
-        lowerPlayer.transform.position = new Vector3(0, 70, 0);
     }
 }

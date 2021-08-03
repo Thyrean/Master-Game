@@ -26,6 +26,16 @@ TagManager:
   - redButton
   - upperPad
   - lowerPad
+  - batteryPad
+  - placedBattery
+  - batteryPad1
+  - batteryPad2
+  - batteryPad3
+  - batteryPad0
+  - CircleDoor
+  - disabled
+  - Interact
+  - Touch
   layers:
   - Default
   - TransparentFX

@@ -8,18 +8,26 @@ public class LockCursor : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    private void Update()
+    /*private void Update()
     {
         Cursor.visible = true;
 
+    }*/
+
+    private void Update()
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        //SceneManager.sceneLoaded += updateCursor;
     }
 
-    private void Awake()
+    /*private void Start()
     {
         Cursor.visible = true;
 
         SceneManager.sceneLoaded += updateCursor;
-    }
+    }*/
 
     private void updateCursor(Scene S, LoadSceneMode E)
     {

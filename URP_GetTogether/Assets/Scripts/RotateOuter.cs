@@ -9,15 +9,36 @@ public class RotateOuter : MonoBehaviour
     private Animator animator;
     public bool canAnimate;
 
+    public bool charIsClose;
+
     void Start()
     {
+        charIsClose = false;
+
         ReactionManager.Add("rotateOuter", rotateOuter);
     }
 
-    private void OnMouseDown()
+    private void Update()
     {
-        ReactionManager.Call("rotateOuter");
-        //yield return new WaitForSeconds(animator.GetCurrentAnimatorStateInfo(0).length + animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        if (Input.GetKeyDown(KeyCode.Alpha3) && charIsClose == true)
+        {
+            ReactionManager.Call("rotateOuter");
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Character")
+        {
+            charIsClose = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Character")
+        {
+            charIsClose = false;
+        }
     }
 
     private void rotateOuter(string[] empty)
