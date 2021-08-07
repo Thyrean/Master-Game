@@ -63,6 +63,10 @@ public class RotateInner : MonoBehaviour
             canAnimate = false;
         }
         else return;
+    }
 
+    private void OnDestroy()
+    {
+        ReactionManager.Remove("rotateInner", rotateInner);
     }
 }

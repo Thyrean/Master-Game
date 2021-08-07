@@ -16,6 +16,7 @@ public class EnergyPad : MonoBehaviour
 
     private void Start()
     {
+
         //ReactionManager.Add("ContinueProgress", ContinueProgress);
         //HoverUI.SetActive(false);
     }

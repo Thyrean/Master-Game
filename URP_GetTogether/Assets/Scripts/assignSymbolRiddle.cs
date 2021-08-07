@@ -22,6 +22,7 @@ public class assignSymbolRiddle : MonoBehaviour
 
         ReactionManager.Call("AssignFirstMaterials");
     }
+
     private void AssignFirstMaterials(string[] textureName)
     {
         for (var i = 0; i < textures.Length; i++)
@@ -45,5 +46,12 @@ public class assignSymbolRiddle : MonoBehaviour
             screens[i].GetComponent<Renderer>().material.mainTexture = texturesThird[i];
             screens[i].GetComponent<clickSymbolScreen>().textureName = texturesThird[i].name;
         }
+    }
+
+    private void OnDestroy()
+    {
+        ReactionManager.Remove("AssignFirstMaterials", AssignFirstMaterials);
+        ReactionManager.Remove("AssignSecondMaterials", AssignSecondMaterials);
+        ReactionManager.Remove("AssignThirdMaterials", AssignThirdMaterials);
     }
 }

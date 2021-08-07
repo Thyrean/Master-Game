@@ -16,7 +16,7 @@ public class TooltipUI : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "CircleDoor")
+        if (other.tag == "firstDoor")
         {
             UI.SetActive(true);
             text.GetComponent<TextMeshProUGUI>().text = "Use the buttons 1, 2 and 3 to rotate the door. If the correct pattern is met, ask your comrade for access authorization";

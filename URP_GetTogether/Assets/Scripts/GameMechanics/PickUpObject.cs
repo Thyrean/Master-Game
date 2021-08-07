@@ -51,18 +51,6 @@ public class PickUpObject : NetworkBehaviour
 
     void LateUpdate()
     {
-        if(batteryPads[0] == null)
-        { 
-            batteryPads[0] = GameObject.FindGameObjectWithTag("batteryPad0");
-            batteryPads[1] = GameObject.FindGameObjectWithTag("batteryPad1");
-            batteryPads[2] = GameObject.FindGameObjectWithTag("batteryPad2");
-            batteryPads[3] = GameObject.FindGameObjectWithTag("batteryPad3");
-
-            batteryPads[1].tag = "Untagged";
-            batteryPads[2].tag = "Untagged";
-            batteryPads[3].tag = "Untagged";
-        }
-
         if (canpickup == true)
         {
             if (Input.GetKeyDown(KeyCode.E) && hasItem == false)
@@ -123,6 +111,12 @@ public class PickUpObject : NetworkBehaviour
             ObjectIwantToPickUp = other.gameObject;
         }
 
+        if (other.gameObject.tag == "Orb")
+        {
+            canpickup = true;
+            ObjectIwantToPickUp = other.gameObject;
+        }
+
         if (other.gameObject.tag == "batteryPad0")
         {
             atBatteryPad0 = true;
@@ -150,6 +144,12 @@ public class PickUpObject : NetworkBehaviour
         {
             canpickup = false;
         }
+
+        if (other.gameObject.tag == "Orb")
+        {
+            canpickup = false;
+        }
+
         if (other.gameObject.tag == "batteryPad0")
         {
             atBatteryPad0 = false;
@@ -182,10 +182,13 @@ public class PickUpObject : NetworkBehaviour
             CapsuleCollider cc = pickUpObj.GetComponent<CapsuleCollider>();
             cc.enabled = false;
 
-            pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
+            if(pickUpObj.GetComponent<Rigidbody>() != null)
+                pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
+
             //pickUpObj.tag = "disabled";
-            pickUpObj.transform.position = myHands.transform.position;
+            pickUpObj.transform.position = myHands.transform.position - new Vector3(-0.2f, -0.2f, 0f);
             pickUpObj.transform.parent = myHands.transform;
+            pickUpObj.transform.rotation = Quaternion.Euler(20, -20, 35);
 
             //ObjectIwantToPickUp.GetComponent<NetworkTransform>().enabled = false;
             //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = true; 
@@ -214,10 +217,13 @@ public class PickUpObject : NetworkBehaviour
             //ObjectIwantToPickUp.GetComponent<NetworkTransform>().enabled = false;
             //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = true;
 
-            pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
+            if (pickUpObj.GetComponent<Rigidbody>() != null)
+                pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
+
             //pickUpObj.tag = "disabled";
-            pickUpObj.transform.position = myHands.transform.position;
+            pickUpObj.transform.position = myHands.transform.position - new Vector3(-0.1f, -0.1f, 0f);
             pickUpObj.transform.parent = myHands.transform;
+            pickUpObj.transform.rotation = Quaternion.Euler(20, -20, 35);
 
             //UpdateBattery(batteryCharge, batteryCharge - 50);
 
@@ -244,7 +250,9 @@ public class PickUpObject : NetworkBehaviour
         //ObjectIwantToPickUp.GetComponent<NetworkTransform>().enabled = true;
         //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = false;
 
-        pickUpObj.GetComponent<Rigidbody>().isKinematic = false;
+        if (pickUpObj.GetComponent<Rigidbody>() != null)
+            pickUpObj.GetComponent<Rigidbody>().isKinematic = false;
+
         //pickUpObj.tag = "Battery";
         pickUpObj.transform.parent = null;
 
@@ -270,7 +278,9 @@ public class PickUpObject : NetworkBehaviour
         //ObjectIwantToPickUp.GetComponent<NetworkTransform>().enabled = true;
         //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = false;
 
-        pickUpObj.GetComponent<Rigidbody>().isKinematic = false;
+        if (pickUpObj.GetComponent<Rigidbody>() != null)
+            pickUpObj.GetComponent<Rigidbody>().isKinematic = false;
+
         //pickUpObj.tag = "Battery";
         pickUpObj.transform.parent = null;
 

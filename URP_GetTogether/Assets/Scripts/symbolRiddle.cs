@@ -180,4 +180,9 @@ public class symbolRiddle : MonoBehaviour
         lights[1].GetComponent<Renderer>().sharedMaterial = Neutral;
         lights[2].GetComponent<Renderer>().sharedMaterial = Neutral;
     }
+
+    private void OnDestroy()
+    {
+        ReactionManager.Remove("ReceiveSymbol", ReceiveSymbol);
+    }
 }

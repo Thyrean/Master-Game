@@ -8,14 +8,18 @@ public class interactionUi : MonoBehaviour
     public GameObject UI;
     public GameObject text;
 
+    public Component pickUpLogic;
+
     public void Start()
     {
+        pickUpLogic = gameObject.GetComponent<PickUpObject>();
+
         UI.SetActive(false);
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Battery")
+        if ((other.CompareTag("Battery") || other.CompareTag("Orb")) && pickUpLogic.GetComponent<PickUpObject>().hasItem == false)
         {
             UI.SetActive(true);
             text.GetComponent<TextMeshProUGUI>().text = "Pick Up";

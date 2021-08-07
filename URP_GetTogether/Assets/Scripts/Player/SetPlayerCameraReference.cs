@@ -1,4 +1,6 @@
 ﻿using Lightbug.CharacterControllerPro.Demo;
+using Lightbug.CharacterControllerPro.Core;
+using Lightbug.CharacterControllerPro.Implementation;
 
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +21,10 @@ public class SetPlayerCameraReference : MonoBehaviour
             return;
         }
 
-        camera.targetTransform = player.transform;
+        camera.targetTransform = player.transform.Find("Graphics").transform;
+
+        //camera.targetTransform = player.transform;
         camera.bodyObject = player.gameObject;
     }
+
 }

@@ -64,6 +64,11 @@ public class RotateMiddle : MonoBehaviour
             canAnimate = false;
         }
         else return;
+         
+    }
 
+    private void OnDestroy()
+    {
+        ReactionManager.Remove("rotateMiddle", rotateMiddle);
     }
 }

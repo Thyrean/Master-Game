@@ -66,4 +66,9 @@ public class RotateOuter : MonoBehaviour
         else return;
 
     }
+
+    private void OnDestroy()
+    {
+        ReactionManager.Remove("rotateOuter", rotateOuter);
+    }
 }
