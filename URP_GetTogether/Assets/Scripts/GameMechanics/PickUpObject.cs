@@ -194,7 +194,7 @@ public class PickUpObject : NetworkBehaviour
             //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = true; 
             //
 
-            UpdateBattery(batteryCharge, batteryCharge - 50);
+            //UpdateBattery(batteryCharge, batteryCharge - 50);
 
             anim.Play("CarryIdle");
             hasItem = true;
@@ -337,6 +337,8 @@ public class PickUpObject : NetworkBehaviour
         canpickup = false;
 
         batteryPads[atPad].GetComponent<EnergyPad>().batteryPlaced = true;
+
+        pickUpObj.tag = "Untagged";
         //batteryPads[atPad].GetComponent<EnergyPad>().ObjectUI.SetActive(false);
         //batteryPads[atPad].tag = "disabled";
     }

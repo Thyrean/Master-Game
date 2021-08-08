@@ -14,7 +14,7 @@ public class LockCursor : MonoBehaviour
 
     }*/
 
-    private void Update()
+    private void Awake()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.Locked;

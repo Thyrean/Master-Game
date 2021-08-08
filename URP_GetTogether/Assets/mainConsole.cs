@@ -12,8 +12,12 @@ public class mainConsole : MonoBehaviour
     public GameObject[] batteryPads;
     public GameObject[] riddles;
 
-    public Renderer groundRenderer;
-    public Texture[] groundEmissionMaps;
+    public GameObject[] missingBatteryUI;
+    public GameObject[] doorLockedUI;
+
+    public Animator groundAnimator;
+    
+    //public Texture[] groundEmissionMaps;
 
     public Material dissolve;
 
@@ -98,7 +102,15 @@ public class mainConsole : MonoBehaviour
 
             firstRiddleComplete = true;
 
-            groundRenderer.material.SetTexture("_EmissionMap", groundEmissionMaps[0]);
+            groundAnimator.Play("FirstPattern");
+
+            missingBatteryUI[0].SetActive(false);
+            missingBatteryUI[1].SetActive(false);
+            missingBatteryUI[2].SetActive(false);
+
+            doorLockedUI[0].SetActive(true);
+            doorLockedUI[1].SetActive(true);
+            doorLockedUI[2].SetActive(true);
         }
     }
 
@@ -111,8 +123,11 @@ public class mainConsole : MonoBehaviour
 
             secondRiddleComplete = true;
 
-            groundRenderer.material.SetTexture("_EmissionMap", groundEmissionMaps[1]);
+            groundAnimator.Play("SecondPattern");
 
+            missingBatteryUI[3].SetActive(false);
+            missingBatteryUI[4].SetActive(false);
+            missingBatteryUI[5].SetActive(false);
         }
     }
 
@@ -125,7 +140,7 @@ public class mainConsole : MonoBehaviour
 
             thirdRiddleComplete = true;
 
-            groundRenderer.material.SetTexture("_EmissionMap", groundEmissionMaps[2]);
+            groundAnimator.Play("ThirdPattern");
         }
     }
 
@@ -138,7 +153,7 @@ public class mainConsole : MonoBehaviour
 
             fourthRiddleComplete = true;
 
-            groundRenderer.material.SetTexture("_EmissionMap", groundEmissionMaps[3]);
+            groundAnimator.Play("FourthPattern");
         }
     }
 

@@ -8,6 +8,7 @@ public class CircleDoorScreen : MonoBehaviour
 {
     public GameObject connectedDoor;
     public GameObject nextDoor;
+    public GameObject doneUI;
 
     //public bool nextDoorOpened; 
 
@@ -62,9 +63,9 @@ public class CircleDoorScreen : MonoBehaviour
         {
             //StartCoroutine(DisableGO(connectedDoor));
             //StartCoroutine(DisableGO(gameObject));
-
+            doneUI.SetActive(true);
             Destroy(connectedDoor, 2f);
-            Destroy(gameObject, 2.5f);
+            Destroy(gameObject);
         }
         //}
     }

@@ -15,12 +15,12 @@ public class TeleportPlayer : NetworkBehaviour
         {
             Debug.Log("Player 1 teleported to 0, 75, 0");
 
-            gameObject.GetComponent<CharacterActor>().Teleport(new Vector3(0f,0f,-15f));
+            gameObject.GetComponent<CharacterActor>().Teleport(new Vector3(0f,75f,-15f));
         }
         if (NetworkServer.active)
         {
             Debug.Log("Player 1 teleported to , 0, 0");
-            gameObject.GetComponent<CharacterActor>().Teleport(new Vector3(0f, 75f, -15f));
+            gameObject.GetComponent<CharacterActor>().Teleport(new Vector3(0f, 0f, -15f));
         }
         //gameObject.GetComponent<TeleportPlayer>().enabled = false;
 

@@ -29,7 +29,6 @@ public class TeleporterPad : MonoBehaviour
         {
             ReactionManager.Call("activateLowerPad");
             currentPlayer = other.gameObject;
-
         }
     }
 
@@ -53,13 +52,13 @@ public class TeleporterPad : MonoBehaviour
             if (gameObject.tag == "upperPad")
             {
                 Debug.Log("Teleporting upper player");
-                currentPlayer.GetComponent<CharacterActor>().Teleport(otherPad.transform.position + new Vector3 (0, 0, 0));
+                currentPlayer.GetComponent<CharacterActor>().Teleport(otherPad.transform.position, otherPad.transform.rotation);
                 currentPlayer = null;
             }
             if (gameObject.tag == "lowerPad")
             {
                 Debug.Log("Teleporting lower player");
-                currentPlayer.GetComponent<CharacterActor>().Teleport(otherPad.transform.position + new Vector3(0, 0, 0));
+                currentPlayer.GetComponent<CharacterActor>().Teleport(otherPad.transform.position, otherPad.transform.rotation);
                 currentPlayer = null;
             }
         }

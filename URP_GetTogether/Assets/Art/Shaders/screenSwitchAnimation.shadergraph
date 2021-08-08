@@ -123,9 +123,23 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "e0e9315a1c7f4acb8038d30295e49571"
+                    "m_Id": "c3902ca594d141d0a5b1bb12a73d3ff3"
                 },
                 "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "0bca239cb37a4ed29f32978c6d0c0f3a"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "f365650b68c441f281059cef040c8843"
+                },
+                "m_SlotId": 1
             }
         },
         {
@@ -250,6 +264,20 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "e64e87e06b944e749f3db6f7663bc74c"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "c3902ca594d141d0a5b1bb12a73d3ff3"
+                },
+                "m_SlotId": 2
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "e0e9315a1c7f4acb8038d30295e49571"
                 },
                 "m_SlotId": 0
             }
@@ -1332,8 +1360,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -109.99996185302735,
-            "y": 323.9999694824219,
+            "x": -75.99999237060547,
+            "y": 393.0,
             "width": 208.0,
             "height": 302.0
         }
@@ -2414,8 +2442,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 231.00001525878907,
-            "y": 189.00001525878907,
+            "x": 189.0,
+            "y": 320.0000305175781,
             "width": 208.0,
             "height": 301.9999694824219
         }
@@ -2568,7 +2596,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "Scale",
     "m_StageCapability": 3,
-    "m_Value": 125.19999694824219,
+    "m_Value": 160.8000030517578,
     "m_DefaultValue": 10.0,
     "m_Labels": []
 }
