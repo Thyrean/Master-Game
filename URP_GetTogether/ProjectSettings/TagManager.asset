@@ -41,6 +41,8 @@ TagManager:
   - secondDoor
   - Orb
   - RelativeCheckPointDistanceRiddle
+  - distanceCollider
+  - laserWall
   layers:
   - Default
   - TransparentFX

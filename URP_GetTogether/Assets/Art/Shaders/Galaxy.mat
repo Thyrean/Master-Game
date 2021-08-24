@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Cubemap_C5CE59D9:
-        m_Texture: {fileID: 8900000, guid: 1b8f9a7f4f08eb24490a6e3327d0396d, type: 3}
+        m_Texture: {fileID: 8900000, guid: 320d888c05f2e1341ba1c9c481ebafad, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -80,7 +80,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_762C3108: 0.01
+    - Vector1_762C3108: 0
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -108,7 +108,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Vector3_1B304F5: {r: 2.58, g: 0.21, b: 0, a: 0}
+    - Vector3_1B304F5: {r: -1.18, g: 0.21, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

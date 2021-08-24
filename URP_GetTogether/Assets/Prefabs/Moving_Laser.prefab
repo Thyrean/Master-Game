@@ -1,0 +1,141 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6939560388016647508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6939560388016647509}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6939560388016647509
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6939560388016647508}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.24399996, z: -1.2819998}
+  m_LocalScale: {x: 0.1, y: 5, z: 0.100000046}
+  m_Children: []
+  m_Father: {fileID: 6939560388151511289}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6939560388151511288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6939560388151511289}
+  m_Layer: 0
+  m_Name: Moving_Laser
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6939560388151511289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6939560388151511288}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 6117634453926064268}
+  - {fileID: 6939560388769479034}
+  - {fileID: 6939560388016647509}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6939560388769479033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6939560388769479034}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6939560388769479034
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6939560388769479033}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -1.343, z: -1.2819998}
+  m_LocalScale: {x: 0.1, y: 5, z: 0.100000046}
+  m_Children: []
+  m_Father: {fileID: 6939560388151511289}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &6939560388678565734
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6939560388151511289}
+    m_Modifications:
+    - target: {fileID: 3794407448207069162, guid: d0ff79918d1c8264093c5044fb33544d, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794407448207069162, guid: d0ff79918d1c8264093c5044fb33544d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794407448207069162, guid: d0ff79918d1c8264093c5044fb33544d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3794407448207069162, guid: d0ff79918d1c8264093c5044fb33544d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.1489999
+      objectReference: {fileID: 0}
+    - target: {fileID: 8079625020574226422, guid: d0ff79918d1c8264093c5044fb33544d, type: 3}
+      propertyPath: m_Name
+      value: Laser_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8138438180364250757, guid: d0ff79918d1c8264093c5044fb33544d, type: 3}
+      propertyPath: endMarker
+      value: 
+      objectReference: {fileID: 6939560388769479034}
+    - target: {fileID: 8138438180364250757, guid: d0ff79918d1c8264093c5044fb33544d, type: 3}
+      propertyPath: resetPosGO
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8138438180364250757, guid: d0ff79918d1c8264093c5044fb33544d, type: 3}
+      propertyPath: startMarker
+      value: 
+      objectReference: {fileID: 6939560388016647509}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d0ff79918d1c8264093c5044fb33544d, type: 3}
+--- !u!4 &6117634453926064268 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3794407448207069162, guid: d0ff79918d1c8264093c5044fb33544d, type: 3}
+  m_PrefabInstance: {fileID: 6939560388678565734}
+  m_PrefabAsset: {fileID: 0}

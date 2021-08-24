@@ -94,12 +94,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_3D643C86: 2.64
-    - Vector1_564B3645: 5
+    - Vector1_564B3645: 2.92
     - Vector1_6CFB42E1: 0.91
-    - Vector1_7D49AF04: 7.43
-    - Vector1_9D8EF500: -0.9
-    - Vector1_A2DA13F6: -1.62
-    - Vector1_BE4D5B8C: 5.79
+    - Vector1_7D49AF04: 7.54
+    - Vector1_9D8EF500: -0.7
+    - Vector1_A2DA13F6: 0.23
+    - Vector1_BE4D5B8C: 5.03
     - Vector1_C3AB1B8C: -0.75
     - Vector1_D676948C: -25.09
     - Vector1_DC5B1A5B: 3.41
@@ -125,10 +125,10 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - Color_B3B09809: {r: 0, g: 0.49627042, b: 0.9811321, a: 0}
-    - Vector3_3F0843DD: {r: -0.15, g: -0.08, b: -0.1, a: 0}
-    - Vector3_553901E: {r: 0.1, g: 0.2, b: 0.1, a: 0}
-    - Vector3_F606424E: {r: 0.05, g: 0.05, b: 0.05, a: 0}
+    - Color_B3B09809: {r: 1, g: 0.22601758, b: 0, a: 1}
+    - Vector3_3F0843DD: {r: 0.01, g: 0.01, b: 0.01, a: 0}
+    - Vector3_553901E: {r: -0.01, g: 0.01, b: 0, a: 0}
+    - Vector3_F606424E: {r: 0.01, g: 0.01, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 4d562a2fac142b74c9cb20d53613e890, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 96ea83f369f20b446bd2ea9220f7a191, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.26593375, g: 0.080723934, b: 0.111312166, a: 1}
+  m_IndirectSpecularColor: {r: 0.002504942, g: 0.041723587, b: 0.15292619, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 4890085278179872738, guid: 67f2e8c1d50d27f4aaefb1158c640159, type: 2}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 4a89b2058cd17e34e86a99911ef16da7, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -713,7 +713,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326828257}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 74, z: 0}
+  m_LocalPosition: {x: 0, y: 63.1, z: 0}
   m_LocalScale: {x: 30, y: 30, z: 30}
   m_Children: []
   m_Father: {fileID: 0}
@@ -821,7 +821,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 333080668}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1107247652}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: QuitApplication
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &333080668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4051,7 +4063,7 @@ PrefabInstance:
       objectReference: {fileID: 8420241408051243316, guid: a5603463f90d9f841b2942ac78375528, type: 3}
     - target: {fileID: 3239697202193623573, guid: 872e283ee82aa0f4089e965cc84b04f5, type: 3}
       propertyPath: spawnPrefabs.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3239697202193623573, guid: 872e283ee82aa0f4089e965cc84b04f5, type: 3}
       propertyPath: spawnPrefabs.Array.data[0]
@@ -4065,6 +4077,14 @@ PrefabInstance:
       propertyPath: spawnPrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 1630108690084255827, guid: bb2db2fdaa2d9714f9eb119410a417de, type: 3}
+    - target: {fileID: 3239697202193623573, guid: 872e283ee82aa0f4089e965cc84b04f5, type: 3}
+      propertyPath: spawnPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 2987355811859184645, guid: 007fb295f940b7b4b8e9101cba0c582a, type: 3}
+    - target: {fileID: 3239697202193623573, guid: 872e283ee82aa0f4089e965cc84b04f5, type: 3}
+      propertyPath: spawnPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 7534357953487808986, guid: b20fc7dac3cba9343b47cde6729b63c1, type: 3}
     - target: {fileID: 3239697202193623574, guid: 872e283ee82aa0f4089e965cc84b04f5, type: 3}
       propertyPath: m_RootOrder
       value: 2
