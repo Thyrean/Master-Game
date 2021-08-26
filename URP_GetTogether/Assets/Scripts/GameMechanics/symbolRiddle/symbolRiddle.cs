@@ -28,7 +28,7 @@ public class symbolRiddle : MonoBehaviour
     void Start()
     {
         for (var i = 0; i < screens.Length; i++)
-            screens[i].SetActive(true);
+            screens[i].tag = "Touch";
 
         progressBar.fillAmount = 1f;
 
@@ -43,13 +43,13 @@ public class symbolRiddle : MonoBehaviour
 
         ReactionManager.Add("ReceiveSymbol", ReceiveSymbol);
         //ReactionManager.Add("UpdateProgressBar", UpdateProgressBar);
-        
+
 
         rend = GetComponent<Renderer>();
 
         for (var i = 0; i < lights.Length; i++)
         {
-            lights[i].GetComponent<Renderer>().material = Neutral;  
+            lights[i].GetComponent<Renderer>().material = Neutral;
         }
     }
 
@@ -59,16 +59,16 @@ public class symbolRiddle : MonoBehaviour
             return;
 
         //if(NetworkServer.active)
-            //ReactionManager.Call("UpdateProgressBar");
+        //ReactionManager.Call("UpdateProgressBar");
         UpdateProgressBar();
 
     }
-    
+
     private void ReceiveSymbol(string[] textureName)
     {
         Debug.Log("Script called! TextureName is:" + textureName[0]);
 
-        if (rend.material.mainTexture.name == textureName[0])
+        if (rend.material.GetTexture("Texture2D_bcba14cde6804909b557147c01a83778").name == textureName[0])
         {
             Debug.Log("Correct Texture entered");
 
@@ -93,7 +93,7 @@ public class symbolRiddle : MonoBehaviour
 
         }
 
-        if (rend.material.mainTexture.name != textureName[0])
+        if (rend.material.GetTexture("Texture2D_bcba14cde6804909b557147c01a83778").name != textureName[0])
         {
             Debug.Log("Wrong Texture entered");
             if (thirdTry == true)
@@ -171,7 +171,7 @@ public class symbolRiddle : MonoBehaviour
             {
                 index = index + 1;
             }
-            else if(index == 2)
+            else if (index == 2)
             {
                 index = 0;
             }

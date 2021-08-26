@@ -13,6 +13,8 @@ public class PickUpObject : NetworkBehaviour
     public Animator anim;
     public GameObject myHands;
 
+    public GameObject orbConsole;
+
     [SyncVar]
     public bool atBatteryPad0;
     [SyncVar]
@@ -155,7 +157,7 @@ public class PickUpObject : NetworkBehaviour
             ClientSendNumber(3);
         }
 
-        if(other.gameObject.tag == "OrbConsole")
+        if(other.gameObject.tag == "InsertOrb" || other.gameObject.tag == "orbConsole")
         {
             atOrbConsole = true;
         }
@@ -195,7 +197,7 @@ public class PickUpObject : NetworkBehaviour
             ClientSendNumber(0);
         }
 
-        if (other.gameObject.tag == "OrbConsole")
+        if (other.gameObject.tag == "InsertOrb" || other.gameObject.tag == "orbConsole")
         {
             atOrbConsole = false;
         }
@@ -349,6 +351,11 @@ public class PickUpObject : NetworkBehaviour
         //batteryPads[atPad].GetComponent<EnergyPad>().ObjectUI.SetActive(false);
         //batteryPads[atPad].tag = "disabled";
 
+        atBatteryPad0 = false;
+        atBatteryPad1 = false;
+        atBatteryPad2 = false;
+        atBatteryPad3 = false;
+
         ServerPlaceBattery(itemID);
     }
 
@@ -377,6 +384,11 @@ public class PickUpObject : NetworkBehaviour
 
         batteryPads[atPad].GetComponent<EnergyPad>().batteryPlaced = true;
 
+        atBatteryPad0 = false;
+        atBatteryPad1 = false;
+        atBatteryPad2 = false;
+        atBatteryPad3 = false;
+
         pickUpObj.tag = "Untagged";
         //batteryPads[atPad].GetComponent<EnergyPad>().ObjectUI.SetActive(false);
         //batteryPads[atPad].tag = "disabled";
@@ -393,6 +405,7 @@ public class PickUpObject : NetworkBehaviour
         atPad = shareNumber;
     }
 
+    
     [Command]
     public void ClientPlaceOrb(uint itemID)
     {
@@ -401,7 +414,7 @@ public class PickUpObject : NetworkBehaviour
         Collider cc = pickUpObj.GetComponent<Collider>();
         cc.enabled = true;
 
-        pickUpObj.transform.position = 
+        pickUpObj.transform.position = orbConsole.transform.position + new Vector3(0, 2f, 0);
         pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
         pickUpObj.transform.parent = null;
         //pickUpObj.tag = "disabled";
@@ -411,6 +424,26 @@ public class PickUpObject : NetworkBehaviour
         canpickup = false;
 
         ServerPlaceOrb(itemID);
+    }
+
+    [ClientRpc]
+    public void ServerPlaceOrb(uint itemID)
+    {
+        GameObject pickUpObj = NetworkIdentity.spawned[itemID].gameObject;
+
+        Collider cc = pickUpObj.GetComponent<Collider>();
+        cc.enabled = true;
+
+        pickUpObj.transform.position = orbConsole.transform.position + new Vector3(0, 2f, 0);
+        pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+        pickUpObj.transform.parent = null;
+        //pickUpObj.tag = "disabled";
+
+        anim.Play("StableGrounded");
+        hasItem = false;
+        canpickup = false;
+
+        pickUpObj.tag = "Untagged";
     }
 
     /*[Command]

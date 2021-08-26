@@ -9,7 +9,6 @@ using Assets.Scripts.ActionReactionSystem;
 public class clickSymbolScreen : MonoBehaviour
 {
     public string textureName;
-
     public bool charIsClose;
 
     private void OnTriggerEnter(Collider other)
@@ -34,4 +33,12 @@ public class clickSymbolScreen : MonoBehaviour
             ReactionManager.Call("ReceiveSymbol", textureName);
         }
     }
+
+
+    /* Update is called once per frame
+     *     public string textureName;
+    private void OnMouseDown()
+    {
+        ReactionManager.Call("ReceiveSymbol", textureName);
+    }*/
 }

@@ -5,25 +5,11 @@ using UnityEngine.UI;
 using Mirror;
 using Assets.Scripts.ActionReactionSystem;
 
-public class ChangeLights : MonoBehaviour
+public class gameEnding : MonoBehaviour
 {
     public GameObject Core;
 
-    public GameObject[] lights;
-
-    public Color baseColor;
-    public Color newColor;
-
-    public Color baseLightColor;
-    public Color newLightColor;
-
-    public Color lerpLightColor;
-
-    public GameObject pointLight;
-    public GameObject newPointLight;
-
-    public float duration = 10;
-    public float t = .2f;
+    public GameObject colorChanger;
 
     public bool gameFinished;
     float startTime;
@@ -56,17 +42,7 @@ public class ChangeLights : MonoBehaviour
 
     private void ChangeColors(string[] textureName)
     {
-        t = (Time.time - startTime) * .2f;
-
-        for (var i = 0; i < lights.Length; i++)
-        {
-            lights[i].GetComponent<Renderer>().material.SetColor("_EmissionColor", Color.Lerp(baseColor, newColor, t * Time.deltaTime));
-        }
-
-        Core.GetComponent<Renderer>().material.SetColor("Color_B3B09809", Color.Lerp(baseColor, newColor, t * Time.deltaTime));
-
-        pointLight.GetComponent<Light>().color = Color.Lerp(baseLightColor, newLightColor, t * Time.deltaTime);
-        newPointLight.SetActive(true);
+        colorChanger.SetActive(true);
     }
 
     private void GameFinished(string[] textureName)

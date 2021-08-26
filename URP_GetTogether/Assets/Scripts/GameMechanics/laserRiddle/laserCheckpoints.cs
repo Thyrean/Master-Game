@@ -52,7 +52,6 @@ public class laserCheckpoints : MonoBehaviour
                     deleteLasers[i].gameObject.SetActive(false);
                 }
             }
-
             CheckpointReached();
         }
     }

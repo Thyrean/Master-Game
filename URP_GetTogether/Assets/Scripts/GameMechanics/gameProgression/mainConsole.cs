@@ -6,6 +6,7 @@ using Assets.Scripts.ActionReactionSystem;
 public class mainConsole : MonoBehaviour
 {
     public bool charIsClose;
+    public GameObject orbConsoleGO;
 
     public GameObject[] images;
     public GameObject[] doors;
@@ -28,6 +29,8 @@ public class mainConsole : MonoBehaviour
 
     public GameObject[] players;
 
+    public GameObject[] teleportPads;
+
     // Update is called once per frame
     private void Start()
     {
@@ -37,12 +40,15 @@ public class mainConsole : MonoBehaviour
         fourthRiddleComplete = false;
 
         players = GameObject.FindGameObjectsWithTag("Character");
+
         for(var i = 0; i < players.Length; i++)
         {
             players[i].GetComponent<PickUpObject>().batteryPads[0] = batteryPads[0];
             players[i].GetComponent<PickUpObject>().batteryPads[1] = batteryPads[1];
             players[i].GetComponent<PickUpObject>().batteryPads[2] = batteryPads[2];
             players[i].GetComponent<PickUpObject>().batteryPads[3] = batteryPads[3];
+
+            players[i].GetComponent<PickUpObject>().orbConsole = orbConsoleGO;
         }
 
         batteryPads[1].tag = "Untagged";
@@ -230,6 +236,9 @@ public class mainConsole : MonoBehaviour
             upperDoors[1].GetComponent<Animation>().Play("DoorDissolve");
             upperDoors[1].GetComponent<AudioSource>().PlayDelayed(.6f);
             StartCoroutine(DestroyDoor(upperDoors[1]));
+
+            teleportPads[0].SetActive(true);
+            teleportPads[1].SetActive(true);
         }
     }
 

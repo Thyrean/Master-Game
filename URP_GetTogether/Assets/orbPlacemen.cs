@@ -10,11 +10,13 @@ public class orbPlacemen : MonoBehaviour
 
     public bool firstOrbPlaced;
     public bool secondOrbPlaced;
+    public bool charIsClose;
 
     private void Start()
     {
         ReactionManager.Add("OrbPlaced", OrbPlaced);
-     
+
+        charIsClose = false;
         firstOrbPlaced = false;
         secondOrbPlaced = false;
         //HoverUI.SetActive(false);
@@ -25,7 +27,12 @@ public class orbPlacemen : MonoBehaviour
         if (other.CompareTag("Orb"))
         {
             charHasOrb = true;
+        }
+
+        if (other.CompareTag("Character")){
+
             gameObject.tag = "InsertOrb";
+            charIsClose = true;
         }
     }
 
@@ -34,15 +41,22 @@ public class orbPlacemen : MonoBehaviour
         if (other.CompareTag("Orb"))
         {
             charHasOrb = false;
-            gameObject.tag = "Untagged";
+        }
+
+        if (other.CompareTag("Character"))
+        {
+
+            gameObject.tag = "orbConsole";
+            charIsClose = false;
         }
     }
 
     private void Update()
     {
-        if (charHasOrb == true && Input.GetKeyDown(KeyCode.E))
+        if (charHasOrb == true && Input.GetKeyDown(KeyCode.E) && charIsClose == true)
         {
             ReactionManager.Call("OrbPlaced");
+            charHasOrb = false;
         }
     }
 
@@ -51,7 +65,8 @@ public class orbPlacemen : MonoBehaviour
         if(firstOrbPlaced == true)
         {
             secondOrbPlaced = true;
-            ReactionManager.Call("GameFinish");
+            ReactionManager.Call("GameFinished");
+            ReactionManager.Call("StartCutScene");
         }
 
         else if(firstOrbPlaced == false)

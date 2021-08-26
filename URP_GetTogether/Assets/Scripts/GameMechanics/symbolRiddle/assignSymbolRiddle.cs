@@ -24,7 +24,7 @@ public class assignSymbolRiddle : MonoBehaviour
 
         for (var i = 0; i < screens.Length; i++)
         {
-            screens[i].SetActive(false);
+            screens[i].tag = "Untagged";
         }
     }
 
@@ -63,3 +63,5 @@ public class assignSymbolRiddle : MonoBehaviour
         ReactionManager.Remove("AssignThirdMaterials", AssignThirdMaterials);
     }
 }
+
+

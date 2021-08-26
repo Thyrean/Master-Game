@@ -48,6 +48,12 @@ public class interactionUi : MonoBehaviour
             UI.SetActive(true);
             text.GetComponent<TextMeshProUGUI>().text = "Touch";
         }
+
+        if (other.tag == "InsertOrb")
+        {
+            UI.SetActive(true);
+            text.GetComponent<TextMeshProUGUI>().text = "Insert Orb";
+        }
     }
 
     public void OnTriggerExit(Collider other)
