@@ -4,26 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ice
-  - Water
-  - Grass
-  - Ledge
-  - Honey
-  - Mud
-  - Boost
-  - WallSlide
   - JumpDown
   - ConsoleCam
   - CharCam
   - Character
   - TouchConsole
   - Battery
-  - redPlatform
-  - greenPlatform
-  - bluePlatform
-  - greenButton
-  - blueButton
-  - redButton
   - upperPad
   - lowerPad
   - batteryPad
@@ -45,6 +31,21 @@ TagManager:
   - laserWall
   - orbConsole
   - InsertOrb
+  - Ice
+  - Mud
+  - Boost
+  - Grass
+  - Hint
+  - Honey
+  - Water
+  - bluePlatform
+  - redPlatform
+  - greenButton
+  - redButton
+  - greenPlatform
+  - blueButton
+  - CarriedOrb
+  - Select
   layers:
   - Default
   - TransparentFX

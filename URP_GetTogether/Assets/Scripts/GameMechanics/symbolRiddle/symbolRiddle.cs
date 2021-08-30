@@ -25,10 +25,13 @@ public class symbolRiddle : MonoBehaviour
 
     public Image progressBar;
 
+    public AudioSource success;
+    public AudioSource fail;
+
     void Start()
     {
         for (var i = 0; i < screens.Length; i++)
-            screens[i].tag = "Touch";
+            screens[i].tag = "Select";
 
         progressBar.fillAmount = 1f;
 
@@ -70,6 +73,9 @@ public class symbolRiddle : MonoBehaviour
 
         if (rend.material.GetTexture("Texture2D_bcba14cde6804909b557147c01a83778").name == textureName[0])
         {
+            if(success != null)
+                success.Play();
+
             Debug.Log("Correct Texture entered");
 
             if (thirdTry == true)
@@ -95,6 +101,9 @@ public class symbolRiddle : MonoBehaviour
 
         if (rend.material.GetTexture("Texture2D_bcba14cde6804909b557147c01a83778").name != textureName[0])
         {
+            if(fail != null)
+                fail.Play();
+
             Debug.Log("Wrong Texture entered");
             if (thirdTry == true)
             {
@@ -152,6 +161,9 @@ public class symbolRiddle : MonoBehaviour
             gameObject.GetComponent<Animation>().Play("DoorDissolve");
             gameObject.GetComponent<AudioSource>().PlayDelayed(.6f);
             gameObject.GetComponent<Collider>().enabled = false;
+            progressBar.enabled = false;
+
+            ReactionManager.Call("AssignSuccessMaterial");
         }
     }
 

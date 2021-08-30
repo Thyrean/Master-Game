@@ -11,21 +11,26 @@ public class assignSymbolRiddle : MonoBehaviour
     public Texture[] texturesSecond;
     public Texture[] texturesThird;
 
+    public Texture textureSuccess;
+
     public GameObject[] screens;
 
     // Start is called before the first frame update
     void Start()
     {
-        ReactionManager.Add("AssignFirstMaterials", AssignFirstMaterials);
-        ReactionManager.Add("AssignSecondMaterials", AssignSecondMaterials);
-        ReactionManager.Add("AssignThirdMaterials", AssignThirdMaterials);
-
-        ReactionManager.Call("AssignFirstMaterials");
-
         for (var i = 0; i < screens.Length; i++)
         {
             screens[i].tag = "Untagged";
         }
+
+        ReactionManager.Add("AssignFirstMaterials", AssignFirstMaterials);
+        ReactionManager.Add("AssignSecondMaterials", AssignSecondMaterials);
+        ReactionManager.Add("AssignThirdMaterials", AssignThirdMaterials);
+
+        ReactionManager.Add("AssignSuccessMaterial", AssignSuccessMaterial);
+
+        ReactionManager.Call("AssignFirstMaterials");
+
     }
 
     private void AssignFirstMaterials(string[] textureName)
@@ -56,11 +61,24 @@ public class assignSymbolRiddle : MonoBehaviour
         }
     }
 
+    private void AssignSuccessMaterial(string[] textureName)
+    {
+        for (var i = 0; i < textures.Length; i++)
+        {
+            screens[i].GetComponent<Renderer>().material.mainTexture = textureSuccess;
+            screens[i].GetComponent<Renderer>().material.SetTexture("_EmissionMap", textureSuccess);
+            screens[i].GetComponent<clickSymbolScreen>().textureName = textureSuccess.name;
+
+            screens[i].tag = "Untagged";
+        }
+    }
+
     private void OnDestroy()
     {
         ReactionManager.Remove("AssignFirstMaterials", AssignFirstMaterials);
         ReactionManager.Remove("AssignSecondMaterials", AssignSecondMaterials);
         ReactionManager.Remove("AssignThirdMaterials", AssignThirdMaterials);
+        ReactionManager.Remove("AssignSuccessMaterial", AssignSuccessMaterial);
     }
 }
 

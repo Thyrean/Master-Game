@@ -7,6 +7,7 @@ public class mainConsole : MonoBehaviour
 {
     public bool charIsClose;
     public GameObject orbConsoleGO;
+    public GameObject orbConsoleScreen;
 
     public GameObject[] images;
     public GameObject[] doors;
@@ -30,6 +31,12 @@ public class mainConsole : MonoBehaviour
     public GameObject[] players;
 
     public GameObject[] teleportPads;
+
+    public GameObject[] doorLights;
+    public GameObject[] doorShine;
+
+    public Material blueLight;
+    public Color blueLightColor;
 
     // Update is called once per frame
     private void Start()
@@ -120,6 +127,9 @@ public class mainConsole : MonoBehaviour
             doorLockedUI[0].SetActive(true);
             doorLockedUI[1].SetActive(true);
             doorLockedUI[2].SetActive(true);
+
+            StartCoroutine(ChangeDoorLight(doorLights[0], 5.2f));
+            StartCoroutine(ChangeDoorShine(doorShine[0], 5.2f));
         }
     }
 
@@ -137,6 +147,11 @@ public class mainConsole : MonoBehaviour
             missingBatteryUI[3].SetActive(false);
             missingBatteryUI[4].SetActive(false);
             missingBatteryUI[5].SetActive(false);
+
+
+            StartCoroutine(ChangeDoorLight(doorLights[1], 7.2f));
+
+            StartCoroutine(ChangeDoorShine(doorShine[1], 7.2f));
         }
     }
 
@@ -150,6 +165,10 @@ public class mainConsole : MonoBehaviour
             thirdRiddleComplete = true;
 
             groundAnimator.Play("ThirdPattern");
+
+
+            StartCoroutine(ChangeDoorLight(doorLights[2], 7.2f));
+            StartCoroutine(ChangeDoorShine(doorShine[2], 7.2f));
         }
     }
 
@@ -163,6 +182,9 @@ public class mainConsole : MonoBehaviour
             fourthRiddleComplete = true;
 
             groundAnimator.Play("FourthPattern");
+
+            StartCoroutine(ChangeDoorLight(doorLights[3], 4.9f));
+            StartCoroutine(ChangeDoorShine(doorShine[3], 4.9f));
         }
     }
 
@@ -227,8 +249,8 @@ public class mainConsole : MonoBehaviour
 
             batteryPads[3].tag = "Untagged";
 
-            images[3].SetActive(false);
-            images[4].SetActive(true);
+            images[5].SetActive(false);
+            images[6].SetActive(true);
 
             StartCoroutine(DestroyDoor(doors[3]));
 
@@ -239,6 +261,9 @@ public class mainConsole : MonoBehaviour
 
             teleportPads[0].SetActive(true);
             teleportPads[1].SetActive(true);
+
+            orbConsoleGO.tag = "orbConsole";
+            orbConsoleScreen.SetActive(false);
         }
     }
 
@@ -247,5 +272,19 @@ public class mainConsole : MonoBehaviour
         yield return new WaitForSeconds(6);
 
         go.SetActive(false);
+    }
+
+    IEnumerator ChangeDoorLight(GameObject go, float waittime)
+    {
+        yield return new WaitForSeconds(waittime);
+
+        go.GetComponent<Renderer>().material = blueLight;
+    }
+
+    IEnumerator ChangeDoorShine(GameObject go, float waittime)
+    {
+        yield return new WaitForSeconds(waittime);
+
+        go.GetComponent<Light>().color = blueLightColor;
     }
 }

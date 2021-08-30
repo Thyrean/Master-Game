@@ -12,9 +12,17 @@ public class orbPlacemen : MonoBehaviour
     public bool secondOrbPlaced;
     public bool charIsClose;
 
+    public PickUpObject[] playerScripts;
+
+
     private void Start()
     {
+
+        playerScripts = FindObjectsOfType<PickUpObject>();
+
         ReactionManager.Add("OrbPlaced", OrbPlaced);
+
+        ReactionManager.Add("FirstOrb", FirstOrb);
 
         charIsClose = false;
         firstOrbPlaced = false;
@@ -24,29 +32,26 @@ public class orbPlacemen : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Orb"))
+        if (other.CompareTag("CarriedOrb"))
         {
             charHasOrb = true;
         }
 
         if (other.CompareTag("Character")){
 
-            gameObject.tag = "InsertOrb";
             charIsClose = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Orb"))
+        if (other.CompareTag("CarriedOrb"))
         {
             charHasOrb = false;
         }
 
         if (other.CompareTag("Character"))
         {
-
-            gameObject.tag = "orbConsole";
             charIsClose = false;
         }
     }
@@ -67,11 +72,22 @@ public class orbPlacemen : MonoBehaviour
             secondOrbPlaced = true;
             ReactionManager.Call("GameFinished");
             ReactionManager.Call("StartCutScene");
+
+            gameObject.tag = "Untagged";
         }
 
         else if(firstOrbPlaced == false)
         {
-            firstOrbPlaced = true;
+            //firstOrbPlaced = true;
+
         }
+    }
+
+    private void FirstOrb(string[] empty)
+    {
+        for (var i = 0; i < playerScripts.Length; i++)
+            playerScripts[i].firstOrbPlaced = true;
+
+        firstOrbPlaced = true;
     }
 }

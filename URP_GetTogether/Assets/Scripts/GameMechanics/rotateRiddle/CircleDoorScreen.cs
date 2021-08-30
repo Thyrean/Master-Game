@@ -55,7 +55,8 @@ public class CircleDoorScreen : MonoBehaviour
         //nextDoorOpened = true;
 
         connectedDoor.GetComponent<Animator>().Play("openCircleDoor");
-        
+        connectedDoor.GetComponent<AudioSource>().PlayDelayed(.6f);
+
         if (nextDoor != null)
             nextDoor.SetActive(true);
 
@@ -64,7 +65,7 @@ public class CircleDoorScreen : MonoBehaviour
             //StartCoroutine(DisableGO(connectedDoor));
             //StartCoroutine(DisableGO(gameObject));
             doneUI.SetActive(true);
-            Destroy(connectedDoor, 2f);
+            Destroy(connectedDoor, 6f);
             Destroy(gameObject);
         }
         //}

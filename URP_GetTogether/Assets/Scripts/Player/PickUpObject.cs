@@ -30,12 +30,18 @@ public class PickUpObject : NetworkBehaviour
     [SyncVar]
     public bool atOrbConsole;
 
+
+    [SyncVar]
+    public bool firstOrbPlaced;
+
+
     public GameObject[] batteryPads;
 
     public bool canpickup;
     GameObject ObjectIwantToPickUp;
     public bool hasItem;
 
+    /*
     public GameObject batteryUI;
 
     public Material fullMaterial;
@@ -44,17 +50,18 @@ public class PickUpObject : NetworkBehaviour
 
     [SyncVar(hook = "UpdateBattery")]
     public int batteryCharge;
-
-    public float speedLimit;
+    */
 
     void Start()
     {
         atPad = 0;
         canpickup = false;
         hasItem = false;
-        batteryCharge = 100;
+        // batteryCharge = 100;
 
-        batteryUI.GetComponent<Renderer>().material = fullMaterial;
+        //      batteryUI.GetComponent<Renderer>().material = fullMaterial;
+
+        firstOrbPlaced = false;
     }
 
 
@@ -72,11 +79,11 @@ public class PickUpObject : NetworkBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Q) && hasItem == true)
+        /*if (Input.GetKeyDown(KeyCode.Q) && hasItem == true)
         {
             if (isClient)
                 ClientDropItem(ObjectIwantToPickUp.GetComponent<NetworkIdentity>().netId);
-        }
+        }*/
 
         if (Input.GetKeyDown(KeyCode.E) && hasItem == true && (atBatteryPad0 == true || atBatteryPad1 == true || atBatteryPad2 == true || atBatteryPad3 == true))
         {
@@ -84,7 +91,7 @@ public class PickUpObject : NetworkBehaviour
                 ClientPlaceBattery(ObjectIwantToPickUp.GetComponent<NetworkIdentity>().netId);
         }
 
-        if(Input.GetKeyDown(KeyCode.E) && hasItem == true && ObjectIwantToPickUp.tag == "Orb" && atOrbConsole == true)
+        if(Input.GetKeyDown(KeyCode.E) && hasItem == true && ObjectIwantToPickUp.tag == "CarriedOrb" && atOrbConsole == true)
         {
             if (isClient)
                 ClientPlaceOrb(ObjectIwantToPickUp.GetComponent<NetworkIdentity>().netId);
@@ -101,11 +108,11 @@ public class PickUpObject : NetworkBehaviour
             }*/
 
     }
-    private void UpdateBattery(int oldValue, int newValue)
+    /*private void UpdateBattery(int oldValue, int newValue)
     {
         if (oldValue == newValue)
             return;
-
+        
         batteryCharge = newValue;
 
         if (newValue == 50)
@@ -120,7 +127,7 @@ public class PickUpObject : NetworkBehaviour
 
             Debug.Log("Battery is 0% charged");
         }
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
@@ -206,69 +213,86 @@ public class PickUpObject : NetworkBehaviour
     [Command]
     public void ClientPickUpItem(uint itemID)
     {
-        if (batteryCharge >= 50)
+        GameObject pickUpObj = NetworkIdentity.spawned[itemID].gameObject;
+
+        Collider cc = pickUpObj.GetComponent<Collider>();
+        cc.enabled = false;
+
+        if(pickUpObj.GetComponent<Rigidbody>() != null)
+            pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
+
+        //pickUpObj.tag = "disabled";
+        pickUpObj.transform.position = myHands.transform.position;
+        pickUpObj.transform.parent = myHands.transform;
+        if (pickUpObj.CompareTag("Battery"))
         {
-            GameObject pickUpObj = NetworkIdentity.spawned[itemID].gameObject;
-
-            Collider cc = pickUpObj.GetComponent<Collider>();
-            cc.enabled = false;
-
-            if(pickUpObj.GetComponent<Rigidbody>() != null)
-                pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
-
-            //pickUpObj.tag = "disabled";
-            pickUpObj.transform.position = myHands.transform.position;
-            pickUpObj.transform.parent = myHands.transform;
-            pickUpObj.transform.localPosition = new Vector3(0.00620000018f, 0.00590000022f, 0.00894000009f);
-
+            pickUpObj.transform.localPosition = new Vector3(0.00590000022f, 0.0046000001f, 0.0119000003f);
             pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
-            pickUpObj.transform.localRotation = Quaternion.Euler(34.242f, -313.153f, -155.86f);
-
-            //ObjectIwantToPickUp.GetComponent<NetworkTransform>().enabled = false;
-            //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = true; 
-            //
-
-            //UpdateBattery(batteryCharge, batteryCharge - 50);
-
-            anim.Play("CarryIdle");
-            hasItem = true;
-
-            ServerPickUpItem(itemID);
+            pickUpObj.transform.localRotation = Quaternion.Euler(31.3597622f, 46.4170151f, 218.755554f);
         }
-        else return;
+        if (pickUpObj.CompareTag("Orb"))
+        {
+            pickUpObj.transform.localPosition = new Vector3(0.0060200002f, -0.00164000003f, 0.00731999986f);
+            pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+            pickUpObj.transform.localRotation = Quaternion.Euler(333.75827f, 233.267761f, 137.937958f);
+
+            pickUpObj.GetComponent<BoxCollider>().size = new Vector3(0.1f, 0.1f, 0.1f);
+        }
+
+        //ObjectIwantToPickUp.GetComponent<NetworkTransform>().enabled = false;
+        //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = true; 
+        //
+
+        //UpdateBattery(batteryCharge, batteryCharge - 50);
+
+        anim.Play("CarryIdle");
+        hasItem = true;
+
+        ServerPickUpItem(itemID);
+        
     }
 
     [ClientRpc]
     public void ServerPickUpItem(uint itemID)
     {
-        if (batteryCharge >= 50)
+        
+        GameObject pickUpObj = NetworkIdentity.spawned[itemID].gameObject;
+
+        Collider cc = pickUpObj.GetComponent<Collider>();
+        cc.enabled = false;
+
+        //ObjectIwantToPickUp.GetComponent<NetworkTransform>().enabled = false;
+        //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = true;
+
+        if (pickUpObj.GetComponent<Rigidbody>() != null)
+            pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
+
+        //pickUpObj.tag = "disabled";
+        pickUpObj.transform.position = myHands.transform.position;
+        pickUpObj.transform.parent = myHands.transform;
+        if (pickUpObj.CompareTag("Battery"))
         {
-            GameObject pickUpObj = NetworkIdentity.spawned[itemID].gameObject;
-
-            Collider cc = pickUpObj.GetComponent<Collider>();
-            cc.enabled = false;
-
-            //ObjectIwantToPickUp.GetComponent<NetworkTransform>().enabled = false;
-            //ObjectIwantToPickUp.GetComponent<NetworkTransformChild>().enabled = true;
-
-            if (pickUpObj.GetComponent<Rigidbody>() != null)
-                pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
-
-            //pickUpObj.tag = "disabled";
-            pickUpObj.transform.position = myHands.transform.position;
-            pickUpObj.transform.parent = myHands.transform;
-            pickUpObj.transform.localPosition = new Vector3(0.00620000018f, 0.00590000022f, 0.00894000009f);
-
-            pickUpObj.transform.rotation = Quaternion.Euler(0,0,0);
-            pickUpObj.transform.localRotation = Quaternion.Euler(34.242f, -313.153f, -155.86f);
-
-            //UpdateBattery(batteryCharge, batteryCharge - 50);
-
-
-            anim.Play("CarryIdle");
-            hasItem = true;
+            pickUpObj.transform.localPosition = new Vector3(0.00590000022f, 0.0046000001f, 0.0119000003f);
+            pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+            pickUpObj.transform.localRotation = Quaternion.Euler(31.3597622f, 46.4170151f, 218.755554f);
         }
-        else return;
+        if (pickUpObj.CompareTag("Orb"))
+        {
+            pickUpObj.transform.localPosition = new Vector3(0.0060200002f, -0.00164000003f, 0.00731999986f);
+            pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+            pickUpObj.transform.localRotation = Quaternion.Euler(333.75827f, 233.267761f, 137.937958f);
+
+            pickUpObj.GetComponent<BoxCollider>().size = new Vector3(0.1f, 0.1f, 0.1f);
+
+            pickUpObj.tag = "CarriedOrb";
+        }
+
+        //UpdateBattery(batteryCharge, batteryCharge - 50);
+
+
+        anim.Play("CarryIdle");
+        hasItem = true;
+        
     }
 
     [Command]
@@ -339,7 +363,7 @@ public class PickUpObject : NetworkBehaviour
             pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
 
         pickUpObj.transform.position = batteryPads[atPad].transform.position + new Vector3(0, 0f, 0);
-        pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+        pickUpObj.transform.rotation = Quaternion.Euler(0, -90f, 0);
         pickUpObj.transform.parent = null;
         //pickUpObj.tag = "disabled";
 
@@ -371,7 +395,7 @@ public class PickUpObject : NetworkBehaviour
             pickUpObj.GetComponent<Rigidbody>().isKinematic = true;
 
         pickUpObj.transform.position = batteryPads[atPad].transform.position + new Vector3(0, 0f, 0);
-        pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+        pickUpObj.transform.rotation = Quaternion.Euler(0, -90f, 0);
         pickUpObj.transform.parent = null;
         //pickUpObj.tag = "disabled";
 
@@ -414,10 +438,23 @@ public class PickUpObject : NetworkBehaviour
         Collider cc = pickUpObj.GetComponent<Collider>();
         cc.enabled = true;
 
-        pickUpObj.transform.position = orbConsole.transform.position + new Vector3(0, 2f, 0);
-        pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
-        pickUpObj.transform.parent = null;
-        //pickUpObj.tag = "disabled";
+        if (firstOrbPlaced == true)
+        {
+            pickUpObj.transform.parent = orbConsole.transform;
+            pickUpObj.transform.position = new Vector3(0, 0, 0);
+            pickUpObj.transform.localPosition = new Vector3(-12.8299999f, 17.0799999f, -5.46999979f);
+
+            pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        if (firstOrbPlaced == false)
+        {
+            pickUpObj.transform.parent = orbConsole.transform;
+            pickUpObj.transform.position = new Vector3(0, 0, 0);
+            pickUpObj.transform.localPosition = new Vector3(-12.8299999f, 17.0799999f, 5.51999998f);
+
+            pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
 
         anim.Play("StableGrounded");
         hasItem = false;
@@ -434,10 +471,29 @@ public class PickUpObject : NetworkBehaviour
         Collider cc = pickUpObj.GetComponent<Collider>();
         cc.enabled = true;
 
-        pickUpObj.transform.position = orbConsole.transform.position + new Vector3(0, 2f, 0);
-        pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
-        pickUpObj.transform.parent = null;
-        //pickUpObj.tag = "disabled";
+        if (firstOrbPlaced == true)
+        {
+            pickUpObj.transform.parent = orbConsole.transform;
+            pickUpObj.transform.position = new Vector3(0, 0, 0);
+            pickUpObj.transform.localPosition = new Vector3(-12.8299999f, 17.0799999f, -5.46999979f);
+
+            pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        }
+
+        if (firstOrbPlaced == false)
+        {
+            pickUpObj.transform.parent = orbConsole.transform;
+            pickUpObj.transform.position = new Vector3(0, 0, 0);
+            pickUpObj.transform.localPosition = new Vector3(-12.8299999f, 17.0799999f, 5.51999998f);
+
+            pickUpObj.transform.rotation = Quaternion.Euler(0, 0, 0);
+
+            //firstOrbPlaced = true;
+
+            ReactionManager.Call("FirstOrb");
+        }
+
 
         anim.Play("StableGrounded");
         hasItem = false;

@@ -49,16 +49,28 @@ public class interactionUi : MonoBehaviour
             text.GetComponent<TextMeshProUGUI>().text = "Touch";
         }
 
-        if (other.tag == "InsertOrb")
+        if (other.tag == "orbConsole")
         {
             UI.SetActive(true);
             text.GetComponent<TextMeshProUGUI>().text = "Insert Orb";
+        }
+
+        if(other.tag == "Hint")
+        {
+            UI.SetActive(true);
+            text.GetComponent<TextMeshProUGUI>().text = "Request Hint";
+        }
+
+        if(other.tag == "Select")
+        {
+            UI.SetActive(true);
+            text.GetComponent<TextMeshProUGUI>().text = "Select Symbol";
         }
     }
 
     public void OnTriggerExit(Collider other)
     {
-        if (UI.activeSelf == true)
+        if (UI.activeSelf == true && other.tag != "CarriedOrb" && other.tag != "Untagged")
         {
             UI.SetActive(false);
         }
