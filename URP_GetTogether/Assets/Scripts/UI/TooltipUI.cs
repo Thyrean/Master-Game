@@ -20,7 +20,7 @@ public class TooltipUI : MonoBehaviour
         if (other.tag == "firstDoor")
         {
             UI.SetActive(true);
-            text.GetComponent<TextMeshProUGUI>().text = "Use the keyboard buttons 1, 2 and 3 to rotate the individual parts of the door";
+            text.GetComponent<TextMeshProUGUI>().text = "Use the keyboard buttons 1, 2 and 3 to rotate and align the star constellation correctly";
         }
 
         if (other.tag == "distanceCollider")

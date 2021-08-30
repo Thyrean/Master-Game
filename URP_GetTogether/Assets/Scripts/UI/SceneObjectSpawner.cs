@@ -18,6 +18,7 @@ public class SceneObjectSpawner : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
     private void Spawn()
     {
         if (newSceneObject == null)

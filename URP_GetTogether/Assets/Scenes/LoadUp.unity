@@ -706,9 +706,9 @@ MonoBehaviour:
   NoDelay: 1
   Interval: 10
   FastResend: 0
-  CongestionWindow: 1
-  SendWindowSize: 128
-  ReceiveWindowSize: 128
+  CongestionWindow: 0
+  SendWindowSize: 256
+  ReceiveWindowSize: 256
   debugGUI: 0
 --- !u!114 &231449591
 MonoBehaviour:
@@ -730,7 +730,7 @@ MonoBehaviour:
   offlineScene: 
   onlineScene: 
   transport: {fileID: 231449590}
-  networkAddress: 77.189.156.37
+  networkAddress: 127.0.0.1
   maxConnections: 4
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60

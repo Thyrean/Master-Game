@@ -140,7 +140,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5561349426305759274, guid: 27b518999bf97fe4abf4cf51b8913c7c, type: 3}
+  - {fileID: 2100000, guid: 62c0d536321134b4aa5065ee2a94d94a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -226,5 +226,6 @@ MonoBehaviour:
   endMarker: {fileID: 0}
   resetPosGO: {fileID: 0}
   resetPosition: {x: 0, y: 0, z: 0}
+  resetRotation: {x: 0, y: 0, z: 0, w: 0}
   speed: 0.4
   waitTime: 1

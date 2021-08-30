@@ -79,11 +79,11 @@ public class PickUpObject : NetworkBehaviour
             }
         }
 
-        /*if (Input.GetKeyDown(KeyCode.Q) && hasItem == true)
+        if (Input.GetKeyDown(KeyCode.O) && hasItem == true)
         {
             if (isClient)
                 ClientDropItem(ObjectIwantToPickUp.GetComponent<NetworkIdentity>().netId);
-        }*/
+        }
 
         if (Input.GetKeyDown(KeyCode.E) && hasItem == true && (atBatteryPad0 == true || atBatteryPad1 == true || atBatteryPad2 == true || atBatteryPad3 == true))
         {
@@ -108,6 +108,7 @@ public class PickUpObject : NetworkBehaviour
             }*/
 
     }
+
     /*private void UpdateBattery(int oldValue, int newValue)
     {
         if (oldValue == newValue)
@@ -213,6 +214,11 @@ public class PickUpObject : NetworkBehaviour
     [Command]
     public void ClientPickUpItem(uint itemID)
     {
+        atBatteryPad0 = false;
+        atBatteryPad1 = false;
+        atBatteryPad2 = false;
+        atBatteryPad3 = false;
+
         GameObject pickUpObj = NetworkIdentity.spawned[itemID].gameObject;
 
         Collider cc = pickUpObj.GetComponent<Collider>();
@@ -255,7 +261,11 @@ public class PickUpObject : NetworkBehaviour
     [ClientRpc]
     public void ServerPickUpItem(uint itemID)
     {
-        
+        atBatteryPad0 = false;
+        atBatteryPad1 = false;
+        atBatteryPad2 = false;
+        atBatteryPad3 = false;
+
         GameObject pickUpObj = NetworkIdentity.spawned[itemID].gameObject;
 
         Collider cc = pickUpObj.GetComponent<Collider>();
@@ -317,6 +327,13 @@ public class PickUpObject : NetworkBehaviour
         //pickUpObj.tag = "Battery";
         pickUpObj.transform.parent = null;
 
+        if (pickUpObj.CompareTag("CarriedOrb")) { 
+            pickUpObj.tag = "Orb";
+
+
+            pickUpObj.GetComponent<BoxCollider>().size = new Vector3(1f, 1f, 1f);
+        }
+
         anim.Play("StableGrounded");
         hasItem = false;
 
@@ -344,6 +361,13 @@ public class PickUpObject : NetworkBehaviour
 
         //pickUpObj.tag = "Battery";
         pickUpObj.transform.parent = null;
+
+        if (pickUpObj.CompareTag("CarriedOrb"))
+        {
+
+            pickUpObj.GetComponent<BoxCollider>().size = new Vector3(1f, 1f, 1f);
+            pickUpObj.tag = "Orb";
+        }
 
         anim.Play("StableGrounded");
         hasItem = false;
