@@ -28,10 +28,10 @@ public class gameEnding : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P)) { 
+        /*if (Input.GetKeyDown(KeyCode.P)) { 
             ReactionManager.Call("GameFinished");
             ReactionManager.Call("StartCutScene");
-        }
+        }*/
 
         if (gameFinished == true)
         {

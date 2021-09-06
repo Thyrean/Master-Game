@@ -1138,6 +1138,7 @@ MonoBehaviour:
   atBatteryPad3: 0
   atPad: 0
   atOrbConsole: 0
+  firstOrbPlaced: 0
   batteryPads:
   - {fileID: 0}
   - {fileID: 0}
@@ -2267,7 +2268,7 @@ PrefabInstance:
     - target: {fileID: 710582863244736425, guid: f62762f16c2d4ec4aab7e207f50c781e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: be4be2f619c43c347a74c2b151aab618, type: 2}
+      objectReference: {fileID: 2100000, guid: ea99b8144fa59ea44925754e1798cbaf, type: 2}
     - target: {fileID: 919132149155446097, guid: f62762f16c2d4ec4aab7e207f50c781e, type: 3}
       propertyPath: m_Name
       value: Astronaut@Bored (2)
